@@ -1,2 +1,2 @@
-# ReactTimer
-A timer web made with React. Now is hosted on http://react-timer-jintao.herokuapp.com/
+# React Template
+A React template includes SASS and test(Karma, Mocha) framework
