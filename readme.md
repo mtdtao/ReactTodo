@@ -1,2 +1,2 @@
-# React Template
-A React template includes SASS and test(Karma, Mocha) framework
+# React Todo
+A todo web made with React.
