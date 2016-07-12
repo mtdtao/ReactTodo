@@ -1,6 +1,8 @@
 var webpack = require('webpack');
 var path = require('path');
 
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
 module.exports = {
   entry: [
     'script!jquery/dist/jquery.min.js',
@@ -14,6 +16,11 @@ module.exports = {
     new webpack.ProvidePlugin({
       '$': 'jquery',
       'jQuery': 'jquery'
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+        compressor: {
+            warnings: false
+        }
     })
   ],
   output: {
@@ -28,29 +35,30 @@ module.exports = {
         './app/api'
     ],
     alias: {
-      applicationStyles: 'app/styles/app.scss',
-      actions: 'app/actions/actions.jsx',
-      reducers: 'app/reducers/reducers.jsx',
-      configureStore: 'app/store/configureStore.jsx'
+        app: 'app',
+        applicationStyles: 'app/styles/app.scss',
+        actions: 'app/actions/actions.jsx',
+        reducers: 'app/reducers/reducers.jsx',
+        configureStore: 'app/store/configureStore.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },
   module: {
-    loaders: [
-      {
-        loader: 'babel-loader',
-        query: {
-          presets: ['react', 'es2015', 'stage-0']
-        },
-        test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components)/
-      }
-    ]
+      loaders: [
+          {
+            loader: 'babel-loader',
+            query: {
+              presets: ['react', 'es2015', 'stage-0']
+            },
+            test: /\.jsx?$/,
+            exclude: /(node_modules|bower_components)/
+          }
+        ]
   },
   sassLoader: {
       includePaths: [
           path.resolve(__dirname, './node_modules/foundation-sites/scss')
       ]
   },
-  devtool: '#eval-cheap-module-source-map'
+  devtool: process.env.NODE_ENV === 'production' ? undefined : '#eval-cheap-module-source-map'
 };
